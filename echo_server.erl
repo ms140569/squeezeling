@@ -8,6 +8,7 @@ start() ->
 loop(Socket) ->
     case gen_tcp:recv(Socket, 0) of
         {ok, Data} ->
+            io:format("Got data~n"),
             gen_tcp:send(Socket, "Hi stranger\n"),
             loop(Socket);
         {error, closed} ->
