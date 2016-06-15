@@ -5,10 +5,10 @@
 
 ERL = erl -boot start_clean
 
-MODS = echo_server main socket_server
+MODS = socket_server squeezeling
 
 all:	compile
-	${ERL} -pa . -s echo_server start
+	${ERL} -pa . -s squeezeling start
 
 compile:	${MODS:%=%.beam}
 
