@@ -5,7 +5,7 @@
 
 ERL = erl -boot start_clean
 
-MODS = socket_server squeezeling
+MODS = bin_to_hex socket_server squeezeling
 
 all:	compile
 	${ERL} -pa . -s squeezeling start
