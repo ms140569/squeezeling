@@ -28,6 +28,7 @@ loop(Socket) ->
 display_pkt(Data) ->
     io:format("~nDATA(~w): ", [byte_size(Data)]),
     io:format(hexdump:dump(Data)),
+    io:format("~nASCII: ~s~n", [binary:part(Data, {0,4})]), 
     io:format("~n").
 
 split_pkt(Socket, Data) ->
@@ -45,6 +46,10 @@ handler(stat, Socket, Tail) ->
     io:format("Recieving a STAT command~n"),
     gen_tcp:send(Socket, "Thanks for your STAT command\n");
 
+handler(ir, Socket, Tail) ->
+    io:format("Recieving a IR command~n"),
+    gen_tcp:send(Socket, "Thanks for your IR command\n");
+
 handler(undef, Socket, Tail) ->
     io:format("Could not parse command~n"),
     gen_tcp:send(Socket, "Unkown command\n").
@@ -60,7 +65,7 @@ hdr_to_atom(Header) ->
       "META" => undef,
       "DSCO" => undef,
       "DBUG" => undef,
-      "IR  " => undef,
+      "IR  " => ir,
       "RAWI" => undef,
       "ANIC" => undef,
       "BUTN" => undef,
