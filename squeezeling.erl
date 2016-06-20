@@ -33,8 +33,17 @@ display_pkt(Data) ->
 
 split_pkt(Socket, Data) ->
 
-    % could also be done using binary:part
-    { Hdr, Tail } = split_binary(Data, 4 ),
+    % There are at least three ways of splitting the packet
+    % I choose the bitstream syntax, the others are:
+    %  a) binary:part
+    %  b) { Hdr, Tail } = split_binary(Data, 4 ),
+    % big endian =:= network byte order
+
+    << Hdr:4/big-binary-unit:8,
+       Len:1/big-integer-unit:32,
+       Tail/binary >> = Data,
+
+    io:format("~nLength: ~B~n", [Len]),
 
     handler(hdr_to_atom(Hdr), Socket, Tail).
 

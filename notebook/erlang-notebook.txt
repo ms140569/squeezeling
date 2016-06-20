@@ -1,1 +1,11 @@
 {_, Tail } = split_binary(<< 16#aabbcc55ff:40 >> , 3 ).
+
+56> << Hdr:4/big-binary-unit:8, Len:4/big-binary-unit:8, Tail/binary >> = << 16#112233445566778899ff:80 >>.
+<<17,34,51,68,85,102,119,136,153,255>>
+57> hexdump:dump(Len).
+"55:66:77:88"
+58> hexdump:dump(Hdr).
+"11:22:33:44"
+59> hexdump:dump(Tail).
+"99:FF"
+
