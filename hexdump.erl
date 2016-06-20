@@ -1,7 +1,8 @@
 -module(hexdump).
 
 % this is a hack for noobes like me ...
--compile(export_all).
+%-compile(export_all).
+-export([dump/1]).
 
 % here are several ways to turn a byte or better a binary to it's hex representation
 

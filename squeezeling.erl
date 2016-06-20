@@ -16,11 +16,17 @@ start() ->
 loop(Socket) ->
     case gen_tcp:recv(Socket, 0) of
         {ok, Data} ->
-            io:format("~nDATA(~w): ", [byte_size(Data)]),
-            io:format(bin_to_hex:bin_to_hex(Data)),
-            io:format("~n"),
-            gen_tcp:send(Socket, "Hi stranger\n"),
+            display_pkt(Data),
+            handle_pkt(Socket, Data),
             loop(Socket);
         {error, closed} ->
             ok
     end.
+
+display_pkt(Data) ->
+    io:format("~nDATA(~w): ", [byte_size(Data)]),
+    io:format(hexdump:dump(Data)),
+    io:format("~n").
+
+handle_pkt(Socket, Data) ->
+    gen_tcp:send(Socket, "Hi stranger\n").
