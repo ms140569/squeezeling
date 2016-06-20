@@ -14,11 +14,12 @@
 start() ->
     io:format("Squeezeling v0.1 running on port ~w~n", [?SQUEEZE_PORT]),
 	socket_server:start(?MODULE, ?SQUEEZE_PORT, {?MODULE, loop}).
+
 loop(Socket) ->
     case gen_tcp:recv(Socket, 0) of
         {ok, Data} ->
             display_pkt(Data),
-            handle_pkt(Socket, Data),
+            split_pkt(Socket, Data),
             loop(Socket);
         {error, closed} ->
             ok
@@ -29,26 +30,31 @@ display_pkt(Data) ->
     io:format(hexdump:dump(Data)),
     io:format("~n").
 
-handle_pkt(Socket, Data) ->
-    case hdr_parser(Data) of
-        helo -> handle_helo(Socket, Data);
-        undef -> handle_undef(Socket, Data)
-    end.
+split_pkt(Socket, Data) ->
 
-handle_helo(Socket, Data) ->
+    % could also be done using binary:part
+    { Hdr, Tail } = split_binary(Data, 4 ),
+
+    handler(hdr_to_atom(Hdr), Socket, Tail).
+
+handler(helo, Socket, Tail) ->
     io:format("Receiving a HELO command~n"),
-    gen_tcp:send(Socket, "Thanks for your HELO.\n").
+    gen_tcp:send(Socket, "Thanks for your HELO.\n");
 
-handle_undef(Socket, Data) ->
+handler(stat, Socket, Tail) ->
+    io:format("Recieving a STAT command~n"),
+    gen_tcp:send(Socket, "Thanks for your STAT command\n");
+
+handler(undef, Socket, Tail) ->
     io:format("Could not parse command~n"),
     gen_tcp:send(Socket, "Unkown command\n").
 
 
-hdr_parser(Data) ->
+hdr_to_atom(Header) ->
     Hdr = #{
       "HELO" => helo,
       "BYE!" => undef,
-      "STAT" => undef,
+      "STAT" => stat,
       "RESP" => undef,
       "BODY" => undef,
       "META" => undef,
@@ -63,6 +69,6 @@ hdr_parser(Data) ->
       "UREQ" => undef 
       },
     
-    Prefix = binary_to_list(binary:part(Data, {0,4})),
+    Prefix = binary_to_list(Header),
   
     maps:get(Prefix, Hdr).

@@ -1,0 +1,1 @@
+{_, Tail } = split_binary(<< 16#aabbcc55ff:40 >> , 3 ).
