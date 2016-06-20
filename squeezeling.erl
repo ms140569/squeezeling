@@ -1,6 +1,7 @@
 -module(squeezeling).
 
--export([start/0, loop/1]).
+%-export([start/0, loop/1]).
+-compile(export_all).
 
 -define ( SQUEEZE_PORT, 3483 ).
 
@@ -29,4 +30,39 @@ display_pkt(Data) ->
     io:format("~n").
 
 handle_pkt(Socket, Data) ->
-    gen_tcp:send(Socket, "Hi stranger\n").
+    case hdr_parser(Data) of
+        helo -> handle_helo(Socket, Data);
+        undef -> handle_undef(Socket, Data)
+    end.
+
+handle_helo(Socket, Data) ->
+    io:format("Receiving a HELO command~n"),
+    gen_tcp:send(Socket, "Thanks for your HELO.\n").
+
+handle_undef(Socket, Data) ->
+    io:format("Could not parse command~n"),
+    gen_tcp:send(Socket, "Unkown command\n").
+
+
+hdr_parser(Data) ->
+    Hdr = #{
+      "HELO" => helo,
+      "BYE!" => undef,
+      "STAT" => undef,
+      "RESP" => undef,
+      "BODY" => undef,
+      "META" => undef,
+      "DSCO" => undef,
+      "DBUG" => undef,
+      "IR  " => undef,
+      "RAWI" => undef,
+      "ANIC" => undef,
+      "BUTN" => undef,
+      "KNOB" => undef,
+      "SETD" => undef,
+      "UREQ" => undef 
+      },
+    
+    Prefix = binary_to_list(binary:part(Data, {0,4})),
+  
+    maps:get(Prefix, Hdr).
