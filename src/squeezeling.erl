@@ -47,19 +47,30 @@ split_pkt(Data) ->
 
     { hdr_to_atom(Hdr), Len, Payload }.
 
-handler(helo, Socket, Tail) ->
+handler(helo, Socket, Payload) ->
     io:format("Receiving a HELO command~n"),
+
+    << DeviceID:1/big-integer-unit:8,
+       Revision:1/big-integer-unit:8,
+       Mac:6/big-binary-unit:8,
+       ChannelList:2/big-integer-unit:8 >> = Payload,
+
+    io:format("~nDevice   : ~w", [getDeviceForNumber(DeviceID)]),
+    io:format("~nRevision : ~p", [Revision]),
+    io:format("~nMAC      : " ++ hexdump:dump(Mac)),
+    io:format("~n"),
+
     gen_tcp:send(Socket, "Thanks for your HELO.\n");
 
-handler(stat, Socket, Tail) ->
+handler(stat, Socket, Payload) ->
     io:format("Recieving a STAT command~n"),
     gen_tcp:send(Socket, "Thanks for your STAT command\n");
 
-handler(ir, Socket, Tail) ->
+handler(ir, Socket, Payload) ->
     io:format("Recieving a IR command~n"),
     gen_tcp:send(Socket, "Thanks for your IR command\n");
 
-handler(undef, Socket, Tail) ->
+handler(undef, Socket, Payload) ->
     io:format("Could not parse command~n"),
     gen_tcp:send(Socket, "Unkown command\n").
 
@@ -86,3 +97,21 @@ hdr_to_atom(Header) ->
     Prefix = binary_to_list(Header),
   
     maps:get(Prefix, Hdr).
+
+getDeviceForNumber(Id) ->
+    DeviceIds = #{
+       2 => squeezebox, 
+       3 => softsqueeze,
+       4 => squeezebox2,
+       5 => transporter,
+       6 => softsqueeze3,
+       7 => receiver,
+       8 => squeezeslave,
+       9 => controller,
+      10 => boom,
+      11 => softboom,
+      12 => squeezeplay
+      },
+    
+    maps:get(Id, DeviceIds).
+
