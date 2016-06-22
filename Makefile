@@ -12,6 +12,9 @@ MODS = bin_to_hex socket_server squeezeling hexdump
 
 all: compile tags
 
+shell: all
+	${ERL} -pa ${BIN}
+
 run: all
 	${ERL} -pa ${BIN} -s squeezeling start
 

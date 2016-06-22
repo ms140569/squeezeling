@@ -1,0 +1,15 @@
+% debug library module
+debugger:start().
+ii(hexdump).
+ib(hexdump, 42).
+il().
+hexdump:dump(<<12,34,56>>).
+
+% debug socket receiver
+    
+debugger:start().
+ii(squeezeling).
+ib(squeezeling, 55).
+squeezeling:start().
+ib(squeezeling, 20).
+    
