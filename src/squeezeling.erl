@@ -19,7 +19,9 @@ loop(Socket) ->
     case gen_tcp:recv(Socket, 0) of
         {ok, Data} ->
             display_pkt(Data),
-            split_pkt(Socket, Data),
+            {Cmd, Len, Payload} = split_pkt(Data),
+            io:format("~nLength of Payload in bytes : ~B~n", [Len]),
+            handler(Cmd, Socket, Payload),
             loop(Socket);
         {error, closed} ->
             ok
@@ -31,7 +33,7 @@ display_pkt(Data) ->
     io:format("~nASCII: ~s~n", [binary:part(Data, {0,4})]), 
     io:format("~n").
 
-split_pkt(Socket, Data) ->
+split_pkt(Data) ->
 
     % There are at least three ways of splitting the packet
     % I choose the bitstream syntax, the others are:
@@ -41,11 +43,9 @@ split_pkt(Socket, Data) ->
 
     << Hdr:4/big-binary-unit:8,
        Len:1/big-integer-unit:32,
-       Tail/binary >> = Data,
+       Payload/binary >> = Data,
 
-    io:format("~nLength: ~B~n", [Len]),
-
-    handler(hdr_to_atom(Hdr), Socket, Tail).
+    { hdr_to_atom(Hdr), Len, Payload }.
 
 handler(helo, Socket, Tail) ->
     io:format("Receiving a HELO command~n"),
