@@ -1,6 +1,7 @@
 .SUFFIXES:	.erl .beam
 
 BIN = ebin
+SRC = src
 
 .erl.beam:
 	erlc -o ${BIN} -W $<
@@ -14,11 +15,8 @@ all: compile tags
 run: all
 	${ERL} -pa ${BIN} -s squeezeling start
 
-compile: ${MODS:%=%.beam} 
-
-#$(EBIN)/%.beam: %.erl
-#	erlc  -W -b beam -o $(BIN) $(EFLAGS) $<
-
+compile:
+	erl -make
 
 tags:
 	etags `find . -name \*.erl`
