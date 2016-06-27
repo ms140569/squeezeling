@@ -25,17 +25,24 @@ client() ->
     ok = gen_tcp:send(Sock, Payload),
     ok = gen_tcp:close(Sock).
 
+% ----------------- HELO -----------------------
+
 wrong_player() ->
     send_payload(<< 16#48454c4f0000000aFF024abbd268a9cf8000:144 >>).
 
 good_player() ->
     send_payload(<< 16#48454c4f0000000a06024abbd268a9cf8000:144 >>).
 
+% ----------------- STAT -----------------------
+
 stat() ->
     send_payload(<< "STAT", 16#00000004:32,  16#aa55bbff:32>>).
 
 short_stat() ->
     send_payload(<< "STAT" >>).
+
+empty_stat() ->
+    send_payload(<< "STAT", 16#00000000:32 >>).
 
 
 send_payload(Payload) ->
