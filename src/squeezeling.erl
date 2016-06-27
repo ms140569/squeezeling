@@ -55,12 +55,20 @@ handler(helo, Socket, Payload) ->
        Mac:6/big-binary-unit:8,
        ChannelList:2/big-integer-unit:8 >> = Payload,
 
-    io:format("~nDevice   : ~w", [getDeviceForNumber(DeviceID)]),
-    io:format("~nRevision : ~p", [Revision]),
-    io:format("~nMAC      : " ++ hexdump:dump(Mac)),
-    io:format("~n"),
+    Device = getDeviceForNumber(DeviceID),
 
-    gen_tcp:send(Socket, "Thanks for your HELO.\n");
+    case Device of
+        undef -> 
+            io:format("~nDevice not found : ~w~n", [Device]),
+            gen_tcp:send(Socket, "I do not know you.\n"),
+            gen_tcp:close();
+        _ ->
+            io:format("~nDevice   : ~w", [Device]),
+            io:format("~nRevision : ~p", [Revision]),
+            io:format("~nMAC      : " ++ hexdump:dump(Mac)),
+            io:format("~n"),
+            gen_tcp:send(Socket, "Thanks for your HELO.\n")
+    end;
 
 handler(stat, Socket, Payload) ->
     io:format("Recieving a STAT command~n"),
@@ -112,6 +120,7 @@ getDeviceForNumber(Id) ->
       11 => softboom,
       12 => squeezeplay
       },
-    
-    maps:get(Id, DeviceIds).
+    % return undef in case this device-number is
+    % not registered.
+    maps:get(Id, DeviceIds, undef).
 

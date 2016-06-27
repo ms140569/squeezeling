@@ -1,7 +1,9 @@
 -module(squeezeclient).
--export ([client/0, getDeviceId/1]).
+% -export ([client/0, getDeviceId/1]).
+-compile(export_all).
 
 -define ( SQEEZE_PORT, 3483 ).
+-define ( DESTINATION, "localhost" ).
 
 client() ->
     Destination = "localhost",
@@ -23,7 +25,19 @@ client() ->
     ok = gen_tcp:send(Sock, Payload),
     ok = gen_tcp:close(Sock).
 
+wrong_player() ->
+    send_payload(<< 16#48454c4f0000000aFF024abbd268a9cf8000:144 >>).
 
+good_player() ->
+    send_payload(<< 16#48454c4f0000000a06024abbd268a9cf8000:144 >>).
+
+
+send_payload(Payload) ->
+    {ok, Sock} = gen_tcp:connect(?DESTINATION, ?SQEEZE_PORT, 
+                                 [binary, {packet, 0}]),
+    ok = gen_tcp:send(Sock, Payload),
+    ok = gen_tcp:close(Sock).
+    
 getDeviceId(Id) ->
     DeviceIds = #{
       squeezebox => 2, 
