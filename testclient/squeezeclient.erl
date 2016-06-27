@@ -31,6 +31,12 @@ wrong_player() ->
 good_player() ->
     send_payload(<< 16#48454c4f0000000a06024abbd268a9cf8000:144 >>).
 
+stat() ->
+    send_payload(<< "STAT", 16#00000004:32,  16#aa55bbff:32>>).
+
+short_stat() ->
+    send_payload(<< "STAT" >>).
+
 
 send_payload(Payload) ->
     {ok, Sock} = gen_tcp:connect(?DESTINATION, ?SQEEZE_PORT, 

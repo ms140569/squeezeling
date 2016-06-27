@@ -35,17 +35,24 @@ display_pkt(Data) ->
 
 split_pkt(Data) ->
 
-    % There are at least three ways of splitting the packet
-    % I choose the bitstream syntax, the others are:
-    %  a) binary:part
-    %  b) { Hdr, Tail } = split_binary(Data, 4 ),
-    % big endian =:= network byte order
+    case size(Data) < 8 of
+        true ->
+            io:format("~nPacket too short~n"),
+            {undef, 0, 0 };
+        false ->
 
-    << Hdr:4/big-binary-unit:8,
-       Len:1/big-integer-unit:32,
-       Payload/binary >> = Data,
+            % There are at least three ways of splitting the packet
+            % I choose the bitstream syntax, the others are:
+            %  a) binary:part
+            %  b) { Hdr, Tail } = split_binary(Data, 4 ),
+            % big endian =:= network byte order
 
-    { hdr_to_atom(Hdr), Len, Payload }.
+            << Hdr:4/big-binary-unit:8,
+               Len:1/big-integer-unit:32,
+               Payload/binary >> = Data,
+
+            { hdr_to_atom(Hdr), Len, Payload }
+    end.
 
 handler(helo, Socket, Payload) ->
     io:format("Receiving a HELO command~n"),
@@ -66,20 +73,21 @@ handler(helo, Socket, Payload) ->
             io:format("~nDevice   : ~w", [Device]),
             io:format("~nRevision : ~p", [Revision]),
             io:format("~nMAC      : " ++ hexdump:dump(Mac)),
+            io:format("~nChannels : ~p", [ChannelList]),
             io:format("~n"),
             gen_tcp:send(Socket, "Thanks for your HELO.\n")
     end;
 
 handler(stat, Socket, Payload) ->
-    io:format("Recieving a STAT command~n"),
+    io:format("~nRecieving a STAT command : " ++ hexdump:dump(Payload) ++ "~n"),
     gen_tcp:send(Socket, "Thanks for your STAT command\n");
 
 handler(ir, Socket, Payload) ->
-    io:format("Recieving a IR command~n"),
+    io:format("~nRecieving a IR command : " ++ hexdump:dump(Payload) ++ "~n"),
     gen_tcp:send(Socket, "Thanks for your IR command\n");
 
 handler(undef, Socket, Payload) ->
-    io:format("Could not parse command~n"),
+    io:format("~nCould not parse command : " ++ hexdump:dump(Payload) ++ "~n"),
     gen_tcp:send(Socket, "Unkown command\n").
 
 
