@@ -75,7 +75,10 @@ handler(helo, Socket, Payload) ->
             log:debug("~nMAC      : " ++ hexdump:dump(Mac)),
             log:debug("~nChannels : ~p", [ChannelList]),
             log:debug("~n"),
-            gen_tcp:send(Socket, "Thanks for your HELO.\n")
+            % we pretend to be a Logitech Media Server v 7.7.5
+            gen_tcp:send(Socket, srvcmd:cmd(vers, << "7.7.5" >>)),
+            % Faking the exact stream command 24 bytes => 192 bits
+            gen_tcp:send(Socket, srvcmd:cmd(strm, << " 16#71306d3f3f3f3f0000003000000000000000000000000000:192" >>))
     end;
 
 handler(stat, Socket, Payload) ->
@@ -106,9 +109,10 @@ handler(ir, Socket, Payload) ->
     log:debug("~nFormat : " ++ hexdump:dump(Format)),
     log:debug("~nNoBits : " ++ hexdump:dump(NoBits)),
     log:debug("~nIRCode : " ++ hexdump:dump(IRCode)),
-    log:debug("~n"),
+    log:debug("~n");
 
-    gen_tcp:send(Socket, "Thanks for your IR command\n");
+    % don't reply any garbage ...
+    % gen_tcp:send(Socket, "Thanks for your IR command\n");
 
 handler(undef, Socket, Payload) ->
     log:warn("~nCould not parse command : " ++ hexdump:dump(Payload) ++ "~n"),

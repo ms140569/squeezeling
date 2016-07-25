@@ -16,6 +16,7 @@ cmd(Cmd, Payload) ->
 
 command(Cmd) ->
     case Cmd of
-        strm -> "strm";           
+        strm -> "strm";
+        vers -> "vers";
         _  -> undef
     end.
