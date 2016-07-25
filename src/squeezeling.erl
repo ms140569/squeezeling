@@ -100,12 +100,12 @@ handler(ir, Socket, Payload) ->
     << Time:4/big-integer-unit:8,
        Format:1/big-binary-unit:8,
        NoBits:1/big-binary-unit:8,
-       IRCode:4/big-integer-unit:8 >> = Payload,
+       IRCode:4/big-binary-unit:8 >> = Payload,
     
     log:debug("~nTime   : ~p", [Time]),
     log:debug("~nFormat : " ++ hexdump:dump(Format)),
     log:debug("~nNoBits : " ++ hexdump:dump(NoBits)),
-    log:debug("~nIRCode : ~p", [IRCode]),
+    log:debug("~nIRCode : " ++ hexdump:dump(IRCode)),
     log:debug("~n"),
 
     gen_tcp:send(Socket, "Thanks for your IR command\n");
