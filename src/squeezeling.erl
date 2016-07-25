@@ -82,6 +82,18 @@ handler(stat, Socket, Payload) ->
     log:debug("~nRecieving a STAT command : " ++ hexdump:dump(Payload) ++ "~n"),
     gen_tcp:send(Socket, "Thanks for your STAT command\n");
 
+handler(butn, Socket, Payload) ->
+    log:debug("~nRecieving a BUTN command : " ++ hexdump:dump(Payload) ++ "~n"),
+
+    << Time:4/big-integer-unit:8,
+       Button:4/big-binary-unit:8 >> = Payload,
+    
+    log:debug("~nTime   : ~p", [Time]),
+    log:debug("~nButton : " ++ hexdump:dump(Button)),
+    log:debug("~n"),
+
+    gen_tcp:send(Socket, "Thanks for your BUTN command\n");
+
 handler(ir, Socket, Payload) ->
     log:debug("~nRecieving a IR command : " ++ hexdump:dump(Payload) ++ "~n"),
 
@@ -116,7 +128,7 @@ hdr_to_atom(Header) ->
       "IR  " => ir,
       "RAWI" => undef,
       "ANIC" => undef,
-      "BUTN" => undef,
+      "BUTN" => butn,
       "KNOB" => undef,
       "SETD" => undef,
       "UREQ" => undef 

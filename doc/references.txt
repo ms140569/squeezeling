@@ -1,0 +1,4 @@
+Perl pack/unpack:
+
+http://www.perlmonks.org/?node_id=224666
+http://perldoc.perl.org/functions/pack.html
