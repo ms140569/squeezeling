@@ -5,3 +5,5 @@
 - client_class and display_class for all combinations
 - how to integrate needed_upgrade? Where to get the stuff from? -> drop it for now!
 - create loader for IR-definition files in IR/ subdir, possibly map to atoms
+- cometd implementation in erlang?
+    

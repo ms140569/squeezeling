@@ -1,0 +1,36 @@
+Schlafzimmer
+
+Player-Modell: Squeezebox Touch
+Firmware: 7.7.3-r16676
+IP-Adresse des Players: 192.168.178.41
+MAC-Adresse des Players: 00:04:20:23:90:c3
+Stärke des drahtlosen Signals: 98%
+
+Esszimmer
+
+Player-Modell: Squeezebox Boom
+Firmware: 57
+IP-Adresse des Players: 192.168.178.43
+MAC-Adresse des Players: 00:04:20:1f:75:f9
+Stärke des drahtlosen Signals: 80%
+
+
+Squeezebox (Wohnzimmer)
+
+Player-Modell: Squeezebox Receiver
+Firmware: 77
+IP-Adresse des Players: 192.168.178.30
+MAC-Adresse des Players: 00:04:20:17:2d:05
+
+Squeezebox Boom (Bad)
+
+Player-Modell: Squeezebox Boom
+Firmware: 57
+IP-Adresse des Players: 192.168.178.29
+MAC-Adresse des Players: 00:04:20:1f:52:09
+
+Cubieboard
+
+?
+
+
