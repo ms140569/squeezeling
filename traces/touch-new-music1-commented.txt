@@ -1,0 +1,56 @@
+#34:
+
+4FB
+[{"channel":"/b99986f8/slim/serverstatus","ext":{"priority":""},"id":"1","data":{"info total albums":6757,"info total artists":3025,"uuid":"71fce9c0-175f-453d-9143-1217ccc7f39b","info total songs":74940,"info total genres":184,"other player count":0,"sn player count":0,"version":"7.7.5","player count":4,"lastscan":"1469322087","players_loop":[{"power":"1","ip":"192.168.178.30:42941","connected":1,"name":"Squeezebox","isplayer":1,"uuid":"c5fa3a9a4f2ad3c25e4fda149fabee36","model":"receiver","playerid":"00:04:20:17:2d:05","displaytype":"none","canpoweroff":1,"seq_no":0},{"isplayer":1,"uuid":"0bbca93aa2ecb5b309537bd5a4c1c8a8","playerid":"00:04:20:23:90:c3","model":"fab4","displaytype":"none","canpoweroff":1,"seq_no":"14","power":0,"ip":"192.168.178.41:45290","connected":1,"name":"Schlafzimmer"},{"connected":1,"power":0,"ip":"192.168.178.29:33249","name":"Squeezebox Boom","playerid":"00:04:20:1f:52:09","model":"boom","isplayer":1,"uuid":"8ad7feab9936afee5da7c2e0f0fc1ee6","seq_no":0,"canpoweroff":1,"displaytype":"graphic-160x32"},{"uuid":"4d90a254da9b8d58e598d6559a9524b7","isplayer":1,"model":"boom","playerid":"00:04:20:1f:75:f9","canpoweroff":1,"displaytype":"graphic-160x32","seq_no":0,"power":0,"ip":"192.168.178.43:44723","connected":1,"name":"Esszimmer"}]}}]
+
+#48:
+
+POST /cometd HTTP/1.1
+User-Agent: SqueezePlay-fab4/7.7.3-r16676 (armv6l)
+Content-Length: 152
+Host: 192.168.178.6:9000
+Content-Type: text/json
+Accept-Language: de
+
+[{"id":122,"data":{"request":["00:04:20:23:90:c3",["power","1",false,"seq_no:15"]],"response":"\/b99986f8\/slim\/request"},"channel":"\/slim\/request"}]
+
+#51:
+
+[{"clientId":"b99986f8","channel":"/slim/request","successful":true,"id":122}]
+
+#52:
+
+51
+[{"channel":"/b99986f8/slim/request","ext":{"priority":""},"data":{},"id":"122"}]
+
+#60:
+
+10E
+[{"id":"3","ext":{"priority":""},"data":["menustatus",[{"weight":100,"actions":{"do":{"player":0,"cmd":["power",0]}},"node":"home","text":"Schlafzimmer ausschalten","id":"playerpower"}],"add","00:04:20:23:90:c3"],"channel":"/b99986f8/slim/menustatus/00:04:20:23:90:c3"}]
+
+#62:
+
+1E64
+[{"channel":"/b99986f8/slim/serverstatus","id":"1","ext":{"priority":""},"data":{"other player count":0,"info total songs":74940,"info total genres":184,"info total albums":6757,"uuid":"71fce9c0-175f-453d-9143-1217ccc7f39b","info total artists":3025,"players_loop":[{"name":"Squeezebox","power":"1","ip":"192.168.178.30:42941","connected":1,"displaytype":"none","canpoweroff":1,"seq_no":0,"uuid":"c5fa3a9a4f2ad3c25e4fda149fabee36","isplayer":1,"model":"receiver","playerid":"00:04:20:17:2d:05"},{"name":"Schlafzimmer","connected":1,"power":"1","ip":"192.168.178.41:45290","seq_no":"15","canpoweroff":1,"displaytype":"none","model":"fab4","playerid":"00:04:20:23:90:c3","isplayer":1,"uuid":"0bbca93aa2ecb5b309537bd5a4c1c8a8"},{"isplayer":1,"uuid":"8ad7feab9936afee5da7c2e0f0fc1ee6","model":"boom","playerid":"00:04:20:1f:52:09","canpoweroff":1,"displaytype":"graphic-160x32","seq_no":0,"power":0,"ip":"192.168.178.29:33249","connected":1,"name":"Squeezebox Boom"},{"uuid":"4d90a254da9b8d58e598d6559a9524b7","isplayer":1,"model":"boom","playerid":"00:04:20:1f:75:f9","displaytype":"graphic-160x32","canpoweroff":1,"seq_no":0,"power":0,"ip":"192.168.178.43:44723","connected":1,"name":"Esszimmer"}],"lastscan":"1469322087","version":"7.7.5","sn player count":0,"player count":4}},{"channel":"/b99986f8/slim/playerstatus/00:04:20:23:90:c3","id":"6","ext":{"priority":""},"data":{"player_connected":1,"playlist repeat":0,"mode":"pause","alarm_snoo
+
+#63:
+
+ze_seconds":540,"time":7.62665996932983,"count":20,"player_name":"Schlafzimmer","offset":"-","seq_no":"15","player_ip":"192.168.178.41:45290","preset_loop":[1,1,1,1,1,1,1,1,0,0],"alarm_state":"none","can_seek":1,"playlist shuffle":0,"playlist_tracks":18,"signalstrength":95,"alarm_next":0,"playlist mode":"off","power":1,"playlist_cur_index":"0","preset_data":[{"type":"audio","text":"FIP","URL":"http://opml.radiotime.com/Tune.ashx?id=s15200&formats=aac,ogg,mp3,wma,wmvoice&partnerId=16&serial=179a38a76b509c014bd1caf45dfd24bf"},{"type":"audio","URL":"http://opml.radiotime.com/Tune.ashx?id=s1561&formats=aac,ogg,mp3,wma,wmvoice&partnerId=16&serial=179a38a76b509c014bd1caf45dfd24bf","text":"SWR1 Rheinland-Pfalz"},{"URL":"http://opml.radiotime.com/Tune.ashx?id=s20292&formats=aac,ogg,mp3,wma,wmvoice&partnerId=16&serial=179a38a76b509c014bd1caf45dfd24bf","text":"SWR2 Kulturradio","type":"audio"},{"text":"Vorwort","URL":"file:///server/data/audio/iTunes/Music/Compilations/Die%2013%C2%BD%20Leben%20Des%20K%C3%A4pt%27n%20Blaub%C3%A4r%20[Disc%201]/1-01%20Vorwort.m4a","type":"audio","server":"71fce9c0-175f-453d-9143-1217ccc7f39b"},{"server":"71fce9c0-175f-453d-9143-1217ccc7f39b","type":"audio","text":"Spirit I Am","URL":"file:///server/data/audio/iTunes/Music/Compilations/Get%20Onboard/01%20Spirit%20I%20Am.m4a"},{"URL":"db:album.title=175%20-%20Die%20Drei%20%3F%3F%3F%20-%20Teuflisches%20Duell","text":"175 - Die Drei ??? - Teuflisches Duell","
+
+#64:
+
+type":"audio","server":"71fce9c0-175f-453d-9143-1217ccc7f39b"},{"URL":"db:album.title=175b%20-%20Die%20Drei%20%3F%3F%3F%20-%20Angriff%20In%20Der%20Nacht","text":"175b - Die Drei ??? - Angriff In Der Nacht","type":"audio","server":"71fce9c0-175f-453d-9143-1217ccc7f39b"},{"type":"audio","server":"71fce9c0-175f-453d-9143-1217ccc7f39b","text":"175c - Die Drei ??? - Die Dunkle Macht","URL":"db:album.title=175c%20-%20Die%20Drei%20%3F%3F%3F%20-%20Die%20Dunkle%20Macht"},{},{}],"duration":227.787,"alarm_timeout_seconds":3600,"rate":1,"item_loop":[{"track":"Rameau: Les Ftes D'Hb - Musette Et Tambourin En Rondeau Pour Terpsichore","text":"Rameau: Les Ftes D'Hb - Musette Et Tambourin En Rondeau Pour Terpsichore\nTeodor Currentzis: Musica Aeterna - Rameau - The Sound Of Light","album":"Rameau - The Sound Of Light","icon-id":"29470bed","artist":"Teodor Currentzis: Musica Aeterna","params":{"track_id":78067,"playlist_index":0},"style":"itemplay","trackType":"local"},{"style":"itemplay","trackType":"local","icon-id":"9e3a8b11","params":{"track_id":78068,"playlist_index":1},"artist":"Teodor Currentzis: Musica Aeterna","text":"Rameau: Zoroastre - Gavotte En Rondeau\nTeodor Currentzis: Musica Aeterna - Rameau - The Sound Of Light","album":"Rameau - The Sound Of Light","track":"Rameau: Zoroastre - Gavotte En Rondeau"},{"track":"Rameau: Les Borades - Entre Pour Les Muses, Les Zphyres, Les Saisons, Les Heures Et Les Arts","album
+
+#65-67: ... DATA as above
+
+#86:
+
+POST /cometd HTTP/1.1
+User-Agent: SqueezePlay-fab4/7.7.3-r16676 (armv6l)
+Content-Length: 222
+Host: 192.168.178.6:9000
+Content-Type: text/json
+Accept-Language: de
+
+[{"id":123,"data":{"request":["00:04:20:23:90:c3",["browselibrary","items",0,200,"sort:new","mode:albums","menu:1","wantMetadata:1","useContextMenu:1"]],"response":"\/b99986f8\/slim\/request"},"channel":"\/slim\/request"}]
+
