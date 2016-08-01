@@ -82,8 +82,7 @@ handler(helo, Socket, Payload) ->
     end;
 
 handler(stat, Socket, Payload) ->
-    log:debug("~nRecieving a STAT command : " ++ hexdump:dump(Payload) ++ "~n"),
-    gen_tcp:send(Socket, "Thanks for your STAT command\n");
+    log:debug("~nRecieving a STAT command : " ++ hexdump:dump(Payload) ++ "~n");
 
 handler(butn, Socket, Payload) ->
     log:debug("~nRecieving a BUTN command : " ++ hexdump:dump(Payload) ++ "~n"),
@@ -93,9 +92,7 @@ handler(butn, Socket, Payload) ->
     
     log:debug("~nTime   : ~p", [Time]),
     log:debug("~nButton : " ++ hexdump:dump(Button)),
-    log:debug("~n"),
-
-    gen_tcp:send(Socket, "Thanks for your BUTN command\n");
+    log:debug("~n");
 
 handler(ir, Socket, Payload) ->
     log:debug("~nRecieving a IR command : " ++ hexdump:dump(Payload) ++ "~n"),
@@ -110,9 +107,6 @@ handler(ir, Socket, Payload) ->
     log:debug("~nNoBits : " ++ hexdump:dump(NoBits)),
     log:debug("~nIRCode : " ++ hexdump:dump(IRCode)),
     log:debug("~n");
-
-    % don't reply any garbage ...
-    % gen_tcp:send(Socket, "Thanks for your IR command\n");
 
 handler(undef, Socket, Payload) ->
     log:warn("~nCould not parse command : " ++ hexdump:dump(Payload) ++ "~n"),
